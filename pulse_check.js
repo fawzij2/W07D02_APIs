@@ -83,3 +83,10 @@ app.post("/create/user", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+app.get("/first-user" ,(req,res) => {
+    res.json(users[0])
+})
+app.get("/", (req,res) => {
+    res.json("hello world")
+})
