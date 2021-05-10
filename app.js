@@ -66,6 +66,13 @@ app.put("/complete/todo/:name", (req,res)=> {
     }
 })
 
+app.get("/completed/todos", (req,res)=>{
+    res.json(todos.filter((elem,i)=>{
+        return elem.isCompleted === true
+    }))
+    
+})
+
 app.listen(port, ()=>{
     console.log(todos);
 });
