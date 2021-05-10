@@ -19,7 +19,6 @@ app.post("/create/todo", (req,res)=>{
 
 app.put("/update/todo/:name", (req,res)=>{
     const updateItem = req.params.name;
-    const add_item = {todo: req.body.todo, isCompleted: req.body.isCompleted};
     const checkeditem = todos.find((elem,i)=>{
         return updateItem === elem.todo
     })
@@ -35,6 +34,38 @@ app.put("/update/todo/:name", (req,res)=>{
     }
 });
 
+app.delete("/delete/todo/:name", (req,res)=>{
+    const deleteItem = req.params.name;
+    let index = 0
+    const checkedItemIndex = todos.find((elem,i)=>{
+        index = i;
+        return deleteItem === elem.todo;
+    })
+    if (checkedItemIndex){
+        const removedItem = todos.splice(index,1);
+        console.log(todos);
+        res.json(removedItem);
+    }
+})
+
+app.put("/complete/todo/:name", (req,res)=> {
+    const completedItem = req.params.name;
+    let index = 0
+    const checkeditem = todos.find((elem,i)=>{
+        index = i
+        return completedItem === elem.todo
+    })
+    console.log(checkeditem);
+    if(checkeditem){
+        res.status(200)
+        todos[index].isCompleted= true;
+        res.json(todos[index])
+    } else {
+        res.status(404);
+        res.json("item doesn't exist");
+    }
+})
+
 app.listen(port, ()=>{
-    console.log("hello world");
+    console.log(todos);
 });
